@@ -11,6 +11,11 @@ services:
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d
       - ./html:/usr/share/nginx/html
+    healthcheck:
+      test: ["CMD-SHELL","curl --fail http://localhost/index.php || exit 1"]
+      interval: 10s
+      retries: 2
+      start_period: 0s
     depends_on:
       - php
     restart: unless-stopped

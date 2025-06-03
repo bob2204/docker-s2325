@@ -1,0 +1,26 @@
+---
+services:
+  www:
+    healthcheck:
+      test: ["CMD-SHELL","curl --fail http://localhost/index.php || exit 1"]
+      interval: 10s
+      retries: 2
+      start_period: 0s
+    depends_on:
+      - php
+    restart: unless-stopped
+    networks:
+      lempnet:
+        ipv4_address: ${LEMPNET_SUBNET}.${NGINX_IPV4}
+
+  php:
+    restart: unless-stopped
+    networks:
+      lempnet:
+        ipv4_address: ${LEMPNET_SUBNET}.${PHP_IPV4}
+
+  db:
+    restart: unless-stopped
+    networks:
+      lempnet:
+        ipv4_address: ${LEMPNET_SUBNET}.${MARIADB_IPV4}

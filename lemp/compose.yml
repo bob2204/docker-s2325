@@ -22,6 +22,9 @@ services:
 
   php:
     image: php-mysql:${PHP_IMAGE_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: php
     hostname: php
     volumes:

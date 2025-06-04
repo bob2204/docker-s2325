@@ -21,7 +21,7 @@ services:
     <<: *default-logging
 
   php:
-    image: php:${PHP_IMAGE_TAG}
+    image: php-mysql:${PHP_IMAGE_TAG}
     container_name: php
     hostname: php
     volumes:

@@ -1,11 +1,8 @@
 FROM debian:12
-RUN  apt update
-COPY start.sh /
-RUN  mkdir /data
-COPY data.txt /data
 WORKDIR /data
-ENV  STAGE=Docker
 ARG  LOGIN
+RUN  apt update && echo "${LOGIN}" > /data/user.txt
+COPY . /data/
+ENV  STAGE=Docker
 ENV  USER=${LOGIN}
-RUN  echo ${LOGIN} > user.txt
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/data/start.sh"]

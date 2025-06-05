@@ -8,9 +8,12 @@ services:
     hostname: hello-1
     environment:
       PORT: 80
-    ports:
-      - 8081:80
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.hello_1.loadbalancer.server.port=80
+    networks:
+      proxynet:
 
   hello-2:
     image: bob2606/hello-http:0.8.29
@@ -18,9 +21,12 @@ services:
     hostname: hello-2
     environment:
       PORT: 80
-    ports:
-      - 8082:80
     restart: unless-stopped
+    networks:
+      proxynet:
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.hello_2.loadbalancer.server.port=80
 
   hello-3:
     image: bob2606/hello-http:0.8.29
@@ -28,6 +34,13 @@ services:
     hostname: hello-3
     environment:
       PORT: 80
-    ports:
-      - 8083:80
     restart: unless-stopped
+    networks:
+      proxynet:
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.hello_3.loadbalancer.server.port=80
+
+networks:
+  proxynet:
+    external: true

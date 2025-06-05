@@ -47,6 +47,9 @@ services:
       - traefik.enable=true
       - traefik.docker.network=proxynet
       - traefik.http.services.hello_3.loadbalancer.server.port=80
+      - traefik.http.routers.hello_3.rule=(Host(`hello-3.stage.local`) && PathPrefix(`/hello-3`))
+      - traefik.http.middlewares.hello_3.stripprefix.prefixes=/hello-3
+      - traefik.http.routers.hello_3.middlewares=hello_3
 
 networks:
   proxynet:

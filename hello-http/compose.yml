@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
+      - traefik.docker.network=proxynet
       - traefik.http.services.hello_1.loadbalancer.server.port=80
     networks:
       proxynet:
@@ -26,6 +27,7 @@ services:
       proxynet:
     labels:
       - traefik.enable=true
+      - traefik.docker.network=proxynet
       - traefik.http.services.hello_2.loadbalancer.server.port=80
 
   hello-3:
@@ -39,6 +41,7 @@ services:
       proxynet:
     labels:
       - traefik.enable=true
+      - traefik.docker.network=proxynet
       - traefik.http.services.hello_3.loadbalancer.server.port=80
 
 networks:

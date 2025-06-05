@@ -1,0 +1,33 @@
+---
+name: hello-http
+
+services:
+  hello-1:
+    image: bob2606/hello-http:0.8.29
+    container_name: hello-1
+    hostname: hello-1
+    environment:
+      PORT: 80
+    ports:
+      - 8081:80
+    restart: unless-stopped
+
+  hello-2:
+    image: bob2606/hello-http:0.8.29
+    container_name: hello-2
+    hostname: hello-2
+    environment:
+      PORT: 80
+    ports:
+      - 8082:80
+    restart: unless-stopped
+
+  hello-3:
+    image: bob2606/hello-http:0.8.29
+    container_name: hello-3
+    hostname: hello-3
+    environment:
+      PORT: 80
+    ports:
+      - 8083:80
+    restart: unless-stopped

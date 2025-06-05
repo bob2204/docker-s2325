@@ -36,7 +36,8 @@ services:
       - traefik.http.services.hello_2.loadbalancer.server.port=80
       - traefik.http.routers.hello_2.rule=PathPrefix(`/hello-2`)
       - traefik.http.middlewares.hello_2.stripprefix.prefixes=/hello-2
-      - traefik.http.routers.hello_2.middlewares=hello_2
+      - traefik.http.middlewares.login.basicauth.usersfile=/etc/traefik/users.passwd
+      - traefik.http.routers.hello_2.middlewares=hello_2,login
 
   hello-3:
     image: bob2606/hello-http:0.8.29

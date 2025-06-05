@@ -12,6 +12,7 @@ services:
     volumes:
       - ./traefik.yml:/etc/traefik/traefik.yml
       - /run/docker.sock:/run/docker.sock
+      - ./users.passwd:/etc/traefik/users.passwd
     restart: unless-stopped
     networks:
       proxynet:

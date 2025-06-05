@@ -14,6 +14,10 @@ services:
       - traefik.docker.network=proxynet
       - traefik.http.services.hello_1.loadbalancer.server.port=80
       - traefik.http.routers.hello_1.rule=Host(`hello-1.stage.local`)
+      - traefik.http.middlewares.errpage.errors.status=400-599
+      - traefik.http.middlewares.errpage.errors.service=errorhandler
+      - traefik.http.middlewares.errpage.errors.query=/{status}.html
+      - traefik.http.routers.hello_1.middlewares=errpage
     networks:
       proxynet:
 

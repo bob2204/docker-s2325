@@ -1,55 +1,31 @@
 ---
-name: lemp
-
 x-logging: &default-logging
   logging:
     driver: json-file
     options:
-      max-size: ${LOGGING_MAX_SIZE}
-      max-file: ${LOGGING_MAX_FILE}
+      max-size: 10m
+      max-file: 1
 
 services:
   www:
-    image: nginx:${NGINX_IMAGE_TAG}
-    container_name: web
+    image: nginx:1.28
     hostname: nginx
     ports:
       - 80:80
-    volumes:
-      - ./nginx-conf:/etc/nginx/conf.d
-      - ./html:/usr/share/nginx/html
     <<: *default-logging
+    networks:
+      lemp:
 
   php:
-    image: php-mysql:${PHP_IMAGE_TAG}
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: php
+    image: php:8.2-fpm
     hostname: php
-    volumes:
-      - ./html:/var/www/html
     <<: *default-logging
-
-  db:
-    image: mariadb:${MARIADB_IMAGE_TAG}
-    container_name: mariadb
-    hostname: mariadb
-    environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_DATABASE=stage
-    volumes:
-      - mariadb:/var/lib/mysql
-    <<: *default-logging
+    networks:
+      lemp:
 
 networks:
-  lempnet:
+  lemp:
     ipam:
       config:
-        - subnet: ${LEMPNET_SUBNET}.0/${LEMPNET_CIDR}
-          gateway: ${LEMPNET_SUBNET}.254
-    driver_opts:
-      com.docker.network.bridge.name: lempnet0
+        - subnet: 172.30.0.0/24
 
-volumes:
-  mariadb:

@@ -16,8 +16,8 @@ services:
     networks:
       lemp:
     volumes:
-      - nginx-conf:/etc/nginx/conf.d
-      - html:/usr/share/nginx/html
+      - nginx-conf:/etc/nginx/conf.d:ro
+      - html:/usr/share/nginx/html:ro
 
   php:
     image: php:8.2-fpm
@@ -26,7 +26,7 @@ services:
     networks:
       lemp:
     volumes:
-      - html:/var/www/html
+      - html:/var/www/html:ro
 
 networks:
   lemp:

@@ -15,6 +15,9 @@ services:
     <<: *default-logging
     networks:
       lemp:
+    volumes:
+      - nginx-conf:/etc/nginx/conf.d
+      - html:/usr/share/nginx/html
 
   php:
     image: php:8.2-fpm
@@ -22,6 +25,8 @@ services:
     <<: *default-logging
     networks:
       lemp:
+    volumes:
+      - html:/var/www/html
 
 networks:
   lemp:
@@ -29,3 +34,14 @@ networks:
       config:
         - subnet: 172.30.0.0/24
 
+volumes:
+  html:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.56.210,vers=4.2
+      device: ":/html"
+  nginx-conf:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.56.210,vers=4.2
+      device: ":/nginx-conf"

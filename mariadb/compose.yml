@@ -1,0 +1,31 @@
+---
+services:
+  db:
+    image: mariadb:10.8
+    volumes:
+      - datadb:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/mariadb
+      - MARIADB_DATABASE=stage
+    networks:
+      lemp:
+    deploy:
+      replicas: 1
+    secrets:
+      - mariadb
+
+networks:
+  lemp:
+    name: lemp_lemp
+    external: true
+
+volumes:
+  datadb:
+    driver_opts:
+      type: nfs
+      o: addr=192.168.56.210,vers=4.2
+      device: ":/datadb"
+
+secrets:
+  mariadb:
+    external: true

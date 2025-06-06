@@ -1,0 +1,32 @@
+---
+x-logging: &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: 1
+
+services:
+  www:
+    image: nginx:1.28
+    hostname: nginx
+    ports:
+      - 80:80
+    <<: *default-logging
+    networks:
+      lemp:
+        ipv4_address: 172.30.0.100
+
+  php:
+    image: php:8.2-fpm
+    hostname: php
+    <<: *default-logging
+    networks:
+      lemp:
+        ipv4_address: 172.30.0.150
+
+networks:
+  lemp:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
